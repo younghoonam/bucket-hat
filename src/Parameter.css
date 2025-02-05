@@ -1,0 +1,188 @@
+.parameter-container {
+  margin-top: 2rem;
+  font-family: Inter, sans-serif;
+}
+
+.parameter-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  padding-top: 1.5rem;
+  border-top: 1px black solid;
+}
+
+.tooltip {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid black;
+  border-radius: 50%;
+
+  background-color: white;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.6rem;
+
+  position: relative;
+}
+
+.tooltip .tooltip-text {
+  --tooltip-width: 15rem;
+  --tooltip-padding: 1rem;
+
+  font-weight: 500;
+  font-size: 0.9rem;
+
+  visibility: hidden;
+  width: var(--tooltip-width);
+  background-color: rgb(34, 34, 34);
+  color: #fff;
+  text-align: center;
+  padding: var(--tooltip-padding);
+  border-radius: 6px;
+
+  position: absolute;
+  z-index: 1;
+
+  top: calc(-1 * var(--tooltip-padding));
+  left: 105%;
+
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip .tooltip-text::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%; /* To the left of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+
+.parameter-container label {
+  font-weight: 700;
+}
+
+.number-area {
+  width: 2.2rem;
+  height: 1.4rem;
+  margin-left: 0.8rem;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+  text-align: center;
+
+  font-size: 0.8rem;
+  box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-30%);
+}
+.slider-container {
+  width: 15rem;
+  --thumb-width: 20px;
+  --thumb-border: 3px;
+}
+.slider {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.marks {
+  top: 5px;
+  width: calc(100% - var(--thumb-width));
+  margin-inline: auto;
+  position: relative;
+}
+
+.marks span {
+  font-size: 0.65rem;
+}
+
+.mark {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.ticks {
+  top: 30px; /* Adjust this value to position the marks below the slider */
+  width: calc(100% - var(--thumb-width));
+  margin-inline: auto;
+  display: flex;
+  justify-content: space-between; /* Optional: spaces out marks automatically */
+}
+
+.ticks span {
+  font-size: 0.7rem;
+}
+
+.tick {
+  height: 0.6rem;
+  width: 1px;
+  background-color: #333;
+}
+
+.thick {
+  height: 1rem;
+  width: 2px;
+}
+.input-container {
+  display: flex;
+}
+
+/* Remove Arrows/Spinners */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/*  */
+
+.slider {
+  position: relative;
+  height: 3px;
+  -webkit-appearance: none;
+  background: linear-gradient(
+    to right,
+    #000 var(--progress, 50%),
+    #ddd var(--progress, 50%)
+  );
+}
+
+/* Thumb Style */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #4caf50;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: var(--thumb-width);
+  height: calc(var(--thumb-width) + 4px);
+  /* background: #fff; */
+  /* border: #000 solid var(--thumb-border); */
+
+  background: none;
+  border: none;
+  cursor: pointer;
+  background-image: url("./pin.png");
+  background-size: cover;
+}
