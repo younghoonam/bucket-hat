@@ -1,17 +1,20 @@
 import { Canvas } from "@react-three/fiber";
-import { useRef, useState } from "react";
-import ThreeCircles from "./ThreeCircles";
+import { useEffect, useRef, useState } from "react";
+
 import "./App.css";
-import { OrbitControls } from "@react-three/drei";
-import LineChart from "./LineChart";
+import { OrbitControls, useGLTF } from "@react-three/drei";
+
 import PatternDrawings from "./PatternDrawing";
 import Parameter from "./Parameter";
 import Header from "./Header";
 import HatMesh from "./HatMesh";
-import Cloth from "./Cloth";
+
+import { HeadModel } from "./HeadModel";
 
 export default function App() {
   const exportButtonRef = useRef(null);
+  const graphicContainer = useRef(null);
+
   const [measurements, setMeasurements] = useState(
     calculateHatMeasurements({
       headHeight: 80,
@@ -21,6 +24,25 @@ export default function App() {
       seamAllowance: 10,
     })
   );
+
+  useEffect(() => {
+    function handleScroll() {
+      console.log(window.scrollY);
+      if (window.innerWidth <= 768) {
+        if (window.scrollY != 0) {
+          graphicContainer.current.classList.add("floating");
+          exportButtonRef.current.classList.add("hide");
+        } else {
+          graphicContainer.current.classList.remove("floating");
+          exportButtonRef.current.classList.remove("hide");
+        }
+      }
+    }
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   function handleMeasurementChange(event) {
     const { name, value } = event.target;
@@ -39,6 +61,24 @@ export default function App() {
     <>
       <Header />
       <main>
+        <div ref={graphicContainer} className="graphic-container">
+          <PatternDrawings
+            measurements={measurements}
+            exportButton={exportButtonRef}
+          />
+          <Canvas
+            camera={{ position: [0, 500, 500], fov: 30, far: 50000 }}
+            shadows
+          >
+            <OrbitControls enableZoom={true} />
+            <directionalLight position={[1, 1, 1]} />
+            <HatMesh measurements={measurements} />
+            <ambientLight />
+          </Canvas>
+          <button ref={exportButtonRef} id="export-button">
+            Export to PDF
+          </button>
+        </div>
         <aside className="panel">
           <h1 className="title">Bucket Hat</h1>
           <span className="subtitle">Pattern Generator</span>
@@ -146,22 +186,6 @@ export default function App() {
             />
           </div>
         </aside>
-        <div className="graphic-container">
-          <PatternDrawings
-            measurements={measurements}
-            exportButton={exportButtonRef}
-          />
-          <Canvas camera={{ position: [0, 500, 500], fov: 30 }}>
-            <OrbitControls enableZoom={false} />
-            {/* <ThreeCircles props={measurements} /> */}
-            <HatMesh measurements={measurements} />
-            {/* <Cloth /> */}
-            <ambientLight />
-          </Canvas>
-          <button ref={exportButtonRef} id="export-button">
-            Export to PDF
-          </button>
-        </div>
       </main>
       {/* <footer>
       </footer> */}

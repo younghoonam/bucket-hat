@@ -11,6 +11,7 @@ export default function PatternDrawings({ measurements, exportButton }) {
 
   const seamAllowance = 10;
   const patternMargin = 20;
+  const segments = 128;
 
   let crown,
     crownSeamAllowance,
@@ -25,7 +26,7 @@ export default function PatternDrawings({ measurements, exportButton }) {
     height: measurements.headConeHeight,
     partHeight: measurements.headHeight,
     developmentAngle: measurements.headConeDevAngle,
-    segments: 128,
+    segments: segments,
   };
 
   const brimMeasurements = {
@@ -34,7 +35,7 @@ export default function PatternDrawings({ measurements, exportButton }) {
     height: measurements.brimConeHeight,
     partHeight: measurements.brimOffset,
     developmentAngle: measurements.brimConeDevAngle,
-    segments: 128,
+    segments: segments,
   };
 
   d3.selectAll("#pattern-svg > *").remove();
@@ -50,15 +51,19 @@ export default function PatternDrawings({ measurements, exportButton }) {
     const containerRef = document.querySelector(".pattern-drawing");
     updateSvgDimensions();
 
-    // Export button
-    exportButton.current.addEventListener("click", handleExport);
+    // Only add event listener if exportButton exists
+    if (exportButton?.current) {
+      exportButton.current.addEventListener("click", handleExport);
 
-    // Resizing
-    window.addEventListener("resize", updateSvgDimensions);
+      return () => {
+        window.removeEventListener("resize", updateSvgDimensions);
+        exportButton.current.removeEventListener("click", handleExport);
+      };
+    }
 
+    // If no exportButton, just clean up resize listener
     return () => {
       window.removeEventListener("resize", updateSvgDimensions);
-      exportButton.current.removeEventListener("click", handleExport);
     };
 
     function updateSvgDimensions() {
@@ -67,7 +72,7 @@ export default function PatternDrawings({ measurements, exportButton }) {
         height: containerRef.offsetHeight,
       });
     }
-  }, [measurements]);
+  }, [measurements, exportButton]);
 
   // Run every time [measurements], [dimension of html svg element] change
 
@@ -160,26 +165,28 @@ export default function PatternDrawings({ measurements, exportButton }) {
 
     // patterns
     const crownPattern = Pattern.centerAlignShapes(
-      [crown, crownSeamAllowance],
+      [crownSeamAllowance],
       paperWidth,
       paperHeight
     );
 
     const brimPattern = Pattern.centerAlignShapes(
-      [brim, brimSeamAllowance],
+      [brimSeamAllowance],
       paperWidth,
       paperHeight
     );
 
     const headPattern = Pattern.centerAlignShapes(
-      [head, headSeamAllowance],
+      [headSeamAllowance],
       paperWidth,
       paperHeight
     );
 
-    await addPage("crown", crownPattern);
-    await addPage("brim", brimPattern);
-    await addPage("head", headPattern);
+    console.log(pdf.getFontList());
+
+    await addPage("Crown", crownPattern);
+    await addPage("Brim", brimPattern);
+    await addPage("Head", headPattern);
     pdf.deletePage(1);
     pdf.save();
     // Brim
@@ -196,7 +203,86 @@ export default function PatternDrawings({ measurements, exportButton }) {
 
       pdf.addPage();
 
-      pdf.text(text, 20, 20);
+      const nameFontSize = 45;
+      const fontSize = 12;
+      const cuttingText = [
+        "Cut x2 For Single Sided Hat",
+        "Cut x4 For Reversable Hat",
+      ];
+
+      pdf.setLineHeightFactor(1.35);
+
+      if (text == "Crown") {
+        pdf.setFontSize(nameFontSize);
+        pdf.setFont("helvetica", "bold");
+        pdf.text("Crown Top", paperWidth / 2, paperHeight / 2, {
+          align: "center",
+        });
+        pdf.setFontSize(fontSize);
+        pdf.setFont("helvetica", "normal");
+        pdf.text(
+          ["Cut x1 For Single Sided Hat", "Cut x2 For Reversable Hat"],
+          paperWidth / 2,
+          paperHeight / 2 + fontSize / 2 + 5,
+          {
+            align: "center",
+          }
+        );
+      } else if (text == "Brim") {
+        pdf.setFontSize(nameFontSize);
+        pdf.setFont("helvetica", "bold");
+        pdf.text("Brim", paperWidth / 2, paperHeight / 2, {
+          align: "center",
+        });
+        pdf.setFontSize(fontSize);
+        pdf.setFont("helvetica", "normal");
+        pdf.text(
+          cuttingText,
+          paperWidth / 2,
+          paperHeight / 2 + fontSize / 2 + 5,
+          {
+            align: "center",
+          }
+        );
+      } else if (text == "Head") {
+        pdf.setFontSize(nameFontSize);
+        pdf.setFont("helvetica", "bold");
+        pdf.text("Head Band", paperWidth / 2, paperHeight / 2, {
+          align: "center",
+        });
+        pdf.setFontSize(fontSize);
+        pdf.setFont("helvetica", "normal");
+        pdf.text(
+          cuttingText,
+          paperWidth / 2,
+          paperHeight / 2 + fontSize / 2 + 5,
+          {
+            align: "center",
+          }
+        );
+      }
+
+      if (text == "Brim" || text == "Head") {
+        const deltaX = shapes[0][segments - 1].x - shapes[0][segments].x;
+        const deltaY = shapes[0][segments - 1].y - shapes[0][segments].y;
+        // Math.atan2 returns angle in radians
+        const angleRadians = Math.atan2(deltaY, deltaX);
+        // Convert to degrees if needed
+        const angleDegrees = angleRadians * (180 / Math.PI) - 92;
+
+        pdf.setFontSize(20);
+        pdf.setFont("helvetica", "normal");
+        pdf.text(
+          " Place On Fold",
+          shapes[0][segments].x,
+          shapes[0][segments].y,
+          {
+            align: "left",
+            angle: angleDegrees,
+            rotationDirection: 0,
+          }
+        );
+      }
 
       shapes.forEach((shape) => {
         svg.append("path").datum(shape).attr("d", line).style("fill", "none");
@@ -209,19 +295,21 @@ export default function PatternDrawings({ measurements, exportButton }) {
             break;
           case "seamallowance":
             svg
-              .style("stroke", "black") // Stroke color
+              .style("stroke", "red") // Stroke color
               .style("stroke-width", 1); // Stroke thickness
             break;
           default:
             svg
               .style("stroke", "black") // Stroke color
-              .style("stroke-width", 1); // Stroke thickness
+              .style("stroke-width", 0.5); // Stroke thickness
         }
       });
 
       await pdf.svg(svgElement);
     }
   }
+
+  // console.log(brimSeamAllowance);
 
   return (
     <div ref={containerRef} className="pattern-drawing" id="pattern-drawing">

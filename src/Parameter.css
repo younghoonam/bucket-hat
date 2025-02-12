@@ -1,4 +1,6 @@
 .parameter-container {
+  --number-area-width: 2.2rem;
+
   margin-top: 2rem;
   font-family: Inter, sans-serif;
 }
@@ -78,7 +80,7 @@
 }
 
 .number-area {
-  width: 2.2rem;
+  width: var(--number-area-width);
   height: 1.4rem;
   margin-left: 0.8rem;
   border: 2px solid black;
@@ -90,7 +92,7 @@
   transform: translateY(-30%);
 }
 .slider-container {
-  width: 15rem;
+  width: calc(100% - var(--number-area-width));
   --thumb-width: 20px;
   --thumb-border: 3px;
 }

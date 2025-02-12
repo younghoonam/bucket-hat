@@ -2,35 +2,32 @@ html {
   font-family: Inter;
 }
 
-#root {
-  padding-inline: 2rem;
-}
-
 body {
   margin: 0;
   background-color: #fafaf6;
+}
 
+#root {
+  padding-inline: 2rem;
   --header-height: 4rem;
+
+  overflow-x: hidden;
 }
 
 /* parent */
 main {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
 
-  /* width: 100vw; */
-  height: calc(100vh - var(--header-height));
+  width: 100%;
 }
 
 .panel {
-  flex: 0.3;
   display: flex;
   flex-direction: column;
   justify-content: end;
   padding-right: 2rem;
   padding-bottom: 4rem;
-
-  border-bottom: solid 1px;
 }
 
 .title {
@@ -44,27 +41,70 @@ main {
 }
 
 .graphic-container {
+  width: 100%;
+  height: calc(100vh - var(--header-height));
+
   background-size: 10px 10px;
-  /* background-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.1) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px); */
   background-image: radial-gradient(
     circle,
     rgba(0, 0, 0, 0.1) 1px,
     rgba(0, 0, 0, 0) 1px
   );
 
-  flex: 1;
   position: relative;
-  border-left: solid 1px #707070;
-  width: auto;
-  min-width: 30rem;
-  height: 100%;
 
-  border-bottom: solid 1px;
+  min-width: 0;
+
+  order: 2;
+
+  border-left: solid 1px #070707;
+
+  transition: 0.5s;
+}
+
+.hide {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+  .panel {
+    margin-top: 5rem;
+    padding-inline: 2rem;
+  }
+  .graphic-container {
+    order: -1; /* Moves B to the top */
+    border-bottom: solid 1px #070707;
+    height: 60vh;
+
+    border-left: none;
+  }
+  #root {
+    padding-inline: 0;
+  }
+  header {
+    padding-inline: 2rem;
+  }
+  .pattern-drawing {
+    display: none;
+  }
+}
+
+.floating {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  width: 15rem;
+  height: 15rem;
+
+  border-radius: 1rem;
+  border: 2px solid #070707;
+  background-color: #fafaf6;
+
+  z-index: 3;
 }
 
 #export-button {
@@ -92,8 +132,8 @@ main {
 
 .pattern-drawing {
   position: absolute;
-  top: 2rem;
-  left: 2rem;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
 
@@ -115,6 +155,6 @@ footer {
 
 header {
   border-bottom: solid 1px;
-  width: 100vw;
+
   height: var(--header-height);
 }

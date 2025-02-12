@@ -5,10 +5,9 @@
 header {
   display: flex;
   align-items: center;
-
   font-size: 0.9rem;
 
-  width: 100%;
+  /* padding-top: 2rem; */
 }
 
 ul {
@@ -16,9 +15,15 @@ ul {
   /* background-color: antiquewhite; */
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   margin: 0;
   padding: 0;
+
+  /* background-image: linear-gradient(antiquewhite, antiquewhite);
+  background-size: auto 50%;
+  background-repeat: no-repeat;
+  background-position: center; */
 }
 
 ul span {
@@ -36,4 +41,55 @@ a {
 
 a:hover {
   color: #777;
+}
+
+.logo {
+  font-family: "EB Garamond", serif;
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+.hamburger {
+  width: 3rem;
+
+  display: none;
+  cursor: pointer;
+
+  z-index: 2;
+}
+
+.hamburger-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 3;
+
+  padding-top: 5rem;
+  padding-left: 2rem;
+}
+
+.hide {
+  display: none;
+}
+
+.hamburger-menu ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hamburger-menu ul li {
+  height: 3rem;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+  .links {
+    display: none;
+  }
 }
