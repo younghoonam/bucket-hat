@@ -1,0 +1,44 @@
+.parameterToggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Inter, sans-serif;
+}
+
+/* Selection >>> */
+.presetSelection {
+  position: relative;
+  width: 8rem;
+}
+
+.presetSelection select {
+  padding-left: 0.4rem;
+  appearance: none;
+  width: 8rem;
+  height: 1.7rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+
+  border: var(--ui-border);
+  border-radius: var(--ui-border-radius);
+  box-shadow: var(--ui-box-shadow);
+}
+
+/* Add a dropdown arrow using pseudo-element */
+.presetSelection::after {
+  content: "▼";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: black;
+  pointer-events: none; /* Prevents clicking on the arrow */
+}
+
+.presetSelection select:hover {
+  background-color: #f5f5f5;
+}

@@ -1,0 +1,206 @@
+.parameterContainer {
+  --numberAreaWidth: 2.2rem;
+}
+
+/* space for ticks and marks */
+.tickSpace {
+  padding-bottom: 1rem;
+}
+
+.parameterLabel {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.parameterContainer label {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.numberArea {
+  width: var(--numberAreaWidth);
+  height: 1.4rem;
+  margin-left: 0.8rem;
+  border: var(--ui-border);
+  border-radius: var(--ui-border-radius);
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: var(--ui-box-shadow);
+  transform: translateY(-35%);
+}
+
+.sliderContainer {
+  width: calc(100% - var(--numberAreaWidth));
+  --thumbWidth: 20px;
+  --thumbBorder: 3px;
+}
+
+.slider {
+  width: 100%;
+  margin-bottom: 1rem;
+  position: relative;
+  height: 3px;
+  -webkit-appearance: none;
+  background: linear-gradient(to right, #000 var(--progress, 50%), #ddd var(--progress, 50%));
+}
+
+.marks {
+  top: 5px;
+  width: calc(100% - var(--thumbWidth));
+  margin-inline: auto;
+  position: relative;
+}
+
+.marks span {
+  font-size: 0.65rem;
+}
+
+.mark {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.ticks {
+  top: 30px;
+  width: calc(100% - var(--thumbWidth));
+  margin-inline: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ticks span {
+  font-size: 0.7rem;
+}
+
+.tick {
+  height: 0.6rem;
+  width: 1px;
+  background-color: #333;
+}
+
+.thick {
+  height: 1rem;
+  width: 2px;
+}
+
+.inputContainer {
+  display: flex;
+}
+
+/* Remove Arrows/Spinners */
+.numberArea::-webkit-outer-spin-button,
+.numberArea::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.numberArea[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Thumb Style >>> */
+/* With ticks */
+.ticking::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--thumbWidth);
+  height: calc(var(--thumbWidth) + 4px);
+  border-radius: 50%;
+  cursor: pointer;
+  background: url("pin.png");
+  background-size: cover;
+}
+
+.ticking::-moz-range-thumb {
+  width: var(--thumbWidth);
+  height: calc(var(--thumbWidth) + 4px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  background-image: url("pin.png");
+  background-size: cover;
+}
+
+/* without ticks */
+.notTicking::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%;
+  border: 3px solid black;
+}
+
+.notTicking::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%;
+  border: 3px solid black;
+}
+
+/* <<< Thumb Style */
+
+/* Tooltip >>> */
+
+.tooltip {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid black;
+  border-radius: 50%;
+  background-color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.6rem;
+  position: relative;
+  z-index: 2;
+}
+
+.tooltip .tooltipText {
+  --tooltipWidth: 10rem;
+  --tooltipPadding: 1rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  visibility: hidden;
+  width: var(--tooltipWidth);
+  background-color: rgb(34, 34, 34);
+  color: white;
+  text-align: center;
+  padding: var(--tooltipPadding);
+  border-radius: 6px;
+  position: absolute;
+  z-index: 999;
+  bottom: 150%;
+  left: calc(-1 * var(--tooltipWidth) / 2);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+/* Show the tooltip text when hovering */
+.tooltip:hover .tooltipText {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip .tooltipText::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -10px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+/* <<< Tooltip */

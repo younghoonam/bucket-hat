@@ -1,0 +1,47 @@
+.accordion {
+  position: relative;
+}
+
+.hiddenCheckbox {
+  display: none;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+
+  cursor: pointer;
+
+  border-radius: var(--ui-border-radius);
+  border: var(--ui-border);
+  box-shadow: var(--ui-box-shadow);
+
+  padding: 0.4rem;
+}
+
+.label:hover {
+  background: #eee;
+}
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 1s ease;
+
+  padding-left: 1rem;
+}
+
+.hiddenCheckbox:checked + .label + .content {
+  max-height: 40rem;
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+  font-size: 12px;
+}
+
+.hiddenCheckbox:checked + .label .arrow {
+  transform: rotate(90deg);
+}

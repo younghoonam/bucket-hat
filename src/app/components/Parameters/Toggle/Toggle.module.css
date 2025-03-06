@@ -1,0 +1,73 @@
+.parameterToggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Inter, sans-serif;
+}
+
+/* Toggle >>> */
+.toggleContainer {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: fit-content;
+  background: none;
+  font-weight: 600;
+  color: #343434;
+  cursor: pointer;
+
+  /* width: 3rem; */
+  /* height: 1.4rem; */
+}
+
+.toggleContainer::before {
+  content: "";
+  position: absolute;
+  width: 48%;
+  height: 85%;
+  right: -2%;
+  background: white;
+  transition: all 0.3s;
+
+  border-radius: var(--ui-border-radius);
+  border: var(--ui-border);
+  box-shadow: var(--ui-box-shadow);
+}
+.toggleCheckbox:checked + .toggleContainer::before {
+  right: 47%;
+}
+.toggleContainer div {
+  padding: 6px;
+  text-align: center;
+  z-index: 1;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.toggleCheckbox {
+  display: none;
+}
+
+.toggleCheckbox:checked + .toggleContainer div:first-child {
+  font-weight: 600;
+  color: black;
+  transition: 0.3s;
+}
+
+.toggleCheckbox:checked + .toggleContainer div:last-child {
+  font-weight: 600;
+  color: gray;
+  transition: 0.3s;
+}
+
+.toggleCheckbox + .toggleContainer div:first-child {
+  font-weight: 600;
+  color: gray;
+  transition: 0.3s;
+}
+
+.toggleCheckbox + .toggleContainer div:last-child {
+  font-weight: 600;
+  color: black;
+  transition: 0.3s;
+}
+/* <<< Toggle */
