@@ -133,6 +133,17 @@ export default function Home() {
   return (
     <>
       <Head>
+        <title>Patternea - Bucket Hat</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="description"
+          content="Interactively create custom bucket hat sewing patterns! Input measurements, preview in 3D, simulate physics and download a printable pattern for free."
+        />
+        <meta
+          name="keywords"
+          content="bucket hat pattern, sewing pattern generator, free sewing patterns, 3D pattern preview, hat physics simulator, printable sewing patterns"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com"></link>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
         <link
