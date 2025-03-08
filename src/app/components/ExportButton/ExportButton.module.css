@@ -1,0 +1,77 @@
+.exportButtonContainer {
+  width: 15rem;
+  height: 4rem;
+
+  background-color: white;
+
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border: var(--ui-border);
+  border-radius: var(--ui-border-radius);
+  box-shadow: var(--ui-box-shadow);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.exportButton {
+  border: none;
+  background: none;
+
+  font-weight: 700;
+  font-size: 1.1rem;
+
+  border-right: var(--ui-divider-border);
+  height: 80%;
+  cursor: pointer;
+  padding: 0;
+
+  flex: 1;
+}
+.paperSizeSelection {
+  --width: 6rem;
+
+  position: relative;
+  width: var(--width);
+  height: 80%;
+
+  display: flex;
+  justify-content: center;
+}
+
+.paperSizeSelection select {
+  padding: 0;
+  padding-left: 1rem;
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+
+  border: none;
+}
+
+/* Add a dropdown arrow using pseudo-element */
+.paperSizeSelection::after {
+  content: "▼";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: black;
+  pointer-events: none; /* Prevents clicking on the arrow */
+}
+
+.paperSizeSelection select:hover {
+  background-color: #f5f5f5;
+}
+.hide {
+  display: none;
+}

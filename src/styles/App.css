@@ -98,6 +98,10 @@ header {
   transition: 0.5s;
 }
 
+.graphic-container div {
+  transition: 0.5s;
+}
+
 .hide {
   display: none;
 }
@@ -148,22 +152,6 @@ header {
   z-index: 3;
 }
 
-#export-button {
-  width: 13rem;
-  height: 4rem;
-  font-size: 1.2rem;
-  font-weight: 600;
-  background-color: white;
-  cursor: pointer;
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
-  border: var(--ui-border);
-  border-radius: var(--ui-border-radius);
-  box-shadow: var(--ui-box-shadow);
-}
-
 .ui-container {
   display: flex;
   flex-direction: column;
@@ -178,6 +166,9 @@ header {
   width: 100%;
   height: 100%;
 
+  margin-top: 1rem;
+  margin-left: 1rem;
+
   z-index: 1;
   /* border: 1px solid black; */
   pointer-events: none;
@@ -187,12 +178,6 @@ header {
   position: absolute;
   top: 0;
   left: 0;
-}
-
-footer {
-  width: 100%;
-  height: 10rem;
-  background-color: #070707;
 }
 
 header {

@@ -1,18 +1,26 @@
+import { EB_Garamond } from "next/font/google";
 import { useRef } from "react";
 import "@/styles/Header.css";
 import hamburgerIcon from "@/assets/hamburger.svg";
+
+// Load EB Garamond font
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "700"], // Adjust weights as needed
+});
 
 export default function Header() {
   const hamburgerMenu = useRef();
   function handleHamburgerClick() {
     hamburgerMenu.current.classList.toggle("hide");
   }
+
   return (
     <header>
       <ul>
         <li>
-          <a href="" className="logo">
-            Patterno
+          <a href="" className={`logo ${ebGaramond.className}`}>
+            Patternea
           </a>
         </li>
         <li className="links">

@@ -16,6 +16,16 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
         <PresetSelection onChange={setPreset} />
 
         <Toggle
+          label={"Units"}
+          onText="mm"
+          offText="inch"
+          id={"isMillimeter"}
+          name={"isMillimeter"}
+          defaultChecked={params.isMillimeter}
+          onChange={onMeasurementChange}
+        />
+
+        <Toggle
           label={"Simulation"}
           id={"simulation"}
           name={"simulation"}
@@ -51,6 +61,7 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
           tooltipText={
             "Measure the distance around your head at the widest point, typically just above your eyebrows and ears. This will ensure the hat fits comfortably."
           }
+          isMillimeter={params.isMillimeter}
         />
         <Parameter
           min={70}
@@ -71,6 +82,7 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
           tooltipText={
             "Measure the vertical distance from the top of your head (crown) to the point where you want the brim of the hat to sit."
           }
+          isMillimeter={params.isMillimeter}
         />
         <Parameter
           min={30}
@@ -90,6 +102,7 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
           tooltipText={
             "Decide how wide you want the brim to be. This is the distance from the edge of the brim to where it meets the crown."
           }
+          isMillimeter={params.isMillimeter}
         />
         <Parameter
           min={1}
@@ -130,9 +143,10 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
           tooltipText={
             "Add extra fabric to the edges of your pattern for sewing. This ensures durability and a proper fit after stitching."
           }
+          isMillimeter={params.isMillimeter}
         />
 
-        <Accordion name={"Advanced Options"}>
+        <Accordion name={"Advanced Measurements"} id={"advancedMeasurements"}>
           <Parameter
             min={0.8}
             max={0.99}
@@ -152,9 +166,12 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
             ]}
             ticks={21}
           />
+        </Accordion>
+
+        <Accordion name={"Simulation Options"} id={"simulationOptions"}>
           <Parameter
-            min={7.0}
-            max={9.0}
+            min={1.0}
+            max={20.0}
             step={0.01}
             defaultValue={params.fabricStiffness}
             onChange={onMeasurementChange}
@@ -163,11 +180,11 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
             label={"Fabric Stiffness"}
             tooltipText={"Adjusts the stiffness of the frabric that retains its original shape"}
             marks={[
-              { value: 7.0, label: "7.0" },
-              { value: 7.5, label: "7.5" },
-              { value: 8.0, label: "8.0" },
-              { value: 8.5, label: "8.5" },
-              { value: 9.0, label: "9.0" },
+              { value: 1.0, label: "1.0" },
+              { value: 5.0, label: "5.0" },
+              { value: 10.0, label: "10.0" },
+              { value: 15.0, label: "15.0" },
+              { value: 20.0, label: "20.0" },
             ]}
             ticks={21}
           />
@@ -191,8 +208,8 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
             ticks={41}
           />
           <Parameter
-            min={80}
-            max={100}
+            min={40}
+            max={140}
             step={0.01}
             defaultValue={params.cannonGravity}
             onChange={onMeasurementChange}
@@ -201,11 +218,11 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
             label={"Simulation Gravity"}
             tooltipText={"Set higher or lower simulation gravity"}
             marks={[
-              { value: 80, label: "80" },
-              { value: 85, label: "85" },
+              { value: 40, label: "40" },
+              { value: 65, label: "65" },
               { value: 90, label: "90" },
-              { value: 95, label: "95" },
-              { value: 100, label: "100" },
+              { value: 115, label: "115" },
+              { value: 140, label: "140" },
             ]}
             ticks={21}
           />

@@ -4,6 +4,46 @@ import { useEffect, useRef } from "react";
 // Styles
 import styles from "./Slider.module.css";
 
+function mmToInchesFraction(mm) {
+  const inches = mm / 25.4; // Convert mm to inches
+  const whole = Math.floor(inches); // Get the whole number part
+  const fraction = inches - whole; // Get the fractional part
+
+  // Define closest fractions in eighths
+  const eighths = [0, 1 / 8, 1 / 4, 3 / 8, 1 / 2, 5 / 8, 3 / 4, 7 / 8, 1];
+  const fractionSymbols = ["", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞", ""];
+
+  // Find the closest fraction
+  let closestIndex = 0;
+  let minDiff = Infinity;
+  for (let i = 0; i < eighths.length; i++) {
+    let diff = Math.abs(fraction - eighths[i]);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closestIndex = i;
+    }
+  }
+
+  // Build the result string
+  let fractionStr = fractionSymbols[closestIndex];
+  let result =
+    (whole == 0 && fractionStr ? "" : whole) + (fractionStr ? "" + fractionStr : "") + '"';
+
+  return result.trim();
+}
+
+function mmToInches(mm) {
+  let inches = mm / 25.4; // Convert mm to inches
+  inches *= 100;
+  inches = Math.round(inches);
+  inches /= 100;
+  return inches;
+}
+
+function inchesToMm(inch) {
+  return Math.round(inch * 25.4);
+}
+
 function ToolTip({ tooltipText = "" }) {
   return (
     <span className={styles.tooltip}>
@@ -24,6 +64,7 @@ export default function Parameter({
   ticks,
   tooltipText,
   step = 1,
+  isMillimeter = true,
 }) {
   const sliderRef = useRef(null);
 
@@ -84,7 +125,7 @@ export default function Parameter({
                       left: `${((mark.value - min) / (max - min)) * 100}%`,
                     }}
                   >
-                    {mark.label}
+                    {isMillimeter ? mark.label : mmToInchesFraction(mark.label)}
                   </span>
                 ))}
               </div>
@@ -93,11 +134,15 @@ export default function Parameter({
           <input
             className={styles.numberArea}
             type="number"
-            value={defaultValue}
+            value={isMillimeter ? defaultValue : mmToInches(defaultValue)}
             name={name}
             min={min}
             max={max}
-            onChange={onChange}
+            onChange={isMillimeter ? onChange : null}
+            // onBlur={(e) => {
+            //   e.target.value = inchesToMm(e.target.value);
+            //   onchange(e);
+            // }}
           />
         </div>
       </div>

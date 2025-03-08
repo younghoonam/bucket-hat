@@ -53,11 +53,9 @@
   position: relative;
 }
 
-.marks span {
-  font-size: 0.65rem;
-}
-
 .mark {
+  font-size: 0.8rem;
+  user-select: none; /* Standard syntax */
   position: absolute;
   transform: translateX(-50%);
 }
@@ -164,6 +162,7 @@
   margin-left: 0.6rem;
   position: relative;
   z-index: 2;
+  user-select: none; /* Standard syntax */
 }
 
 .tooltip .tooltipText {

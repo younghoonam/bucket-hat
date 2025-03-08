@@ -24,3 +24,10 @@ label {
   bottom: 0;
   right: 0;
 }
+.hide {
+  display: none;
+}
+
+canvas {
+  transition: all 0.5s;
+}

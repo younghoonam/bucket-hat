@@ -137,9 +137,11 @@ export default function PatternDrawings({ params, exportButton }) {
 
   async function handleExport() {
     exportPatternsToPdf(
-      [crownSeamAllowance, crown],
-      [headSeamAllowance, head],
-      [brimSeamAllowance, brim]
+      params.paperSize,
+      [crownSeamAllowance],
+      [headSeamAllowance],
+      [brimSeamAllowance],
+      params
     );
   }
 

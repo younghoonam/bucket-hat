@@ -26,20 +26,22 @@
 }
 
 .content {
+  --expanded-height: 40rem;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 1s ease;
+  transition: max-height 0.5s ease;
 
   padding-left: 1rem;
 }
 
 .hiddenCheckbox:checked + .label + .content {
-  max-height: 40rem;
+  max-height: var(--expanded-height);
 }
 
 .arrow {
   transition: transform 0.3s ease;
   font-size: 12px;
+  user-select: none; /* Standard syntax */
 }
 
 .hiddenCheckbox:checked + .label .arrow {

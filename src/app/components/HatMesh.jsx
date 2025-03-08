@@ -2,9 +2,14 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
 import { useFrame } from "@react-three/fiber";
+import { useTexture } from "@react-three/drei";
 
 const latheSegments = 20;
-const headRadius = 85;
+const headRadius = 92;
+const crownSegments = 3;
+const headSegments = 3;
+const brimSegments = 8;
+const crossSegments = crownSegments + headSegments + brimSegments;
 
 export default function HatMesh({ params }) {
   const hatRef = useRef();
@@ -12,7 +17,7 @@ export default function HatMesh({ params }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       initCannon();
-
+      // updateUv();
       return () => clearTimeout(timer);
     }, 300);
   }, [params]);
@@ -26,11 +31,6 @@ export default function HatMesh({ params }) {
   const curve1 = new THREE.LineCurve(point1, point2);
   const curve2 = new THREE.LineCurve(point2, point3);
 
-  const crownSegments = 3;
-  const headSegments = 3;
-  const brimSegments = 8;
-  const crossSegments = crownSegments + headSegments + brimSegments;
-
   const points = [];
 
   points.push(
@@ -39,8 +39,50 @@ export default function HatMesh({ params }) {
     ...curve2.getPoints(brimSegments)
   );
 
-  // CANNON >>>
+  const materialProps = useTexture({ roughnessMap: "/fabric-roughness.png" });
 
+  // UV
+  function updateUv() {
+    // Create the LatheGeometry
+    const geometry = hatRef.current.geometry;
+
+    // Extract positions from geometry
+    const posAttr = geometry.attributes.position;
+    const positions = posAttr.array;
+    const vertexCount = posAttr.count;
+
+    // Compute min/max Y for normalization
+    let minY = Infinity,
+      maxY = -Infinity;
+    for (let i = 1; i < positions.length; i += 3) {
+      const y = positions[i];
+      if (y < minY) minY = y;
+      if (y > maxY) maxY = y;
+    }
+
+    // Compute UVs
+    const uvs = new Float32Array(vertexCount * 2);
+    for (let i = 0; i < vertexCount; i++) {
+      const x = positions[i * 3];
+      const z = positions[i * 3 + 2];
+      const y = positions[i * 3 + 1];
+
+      // Compute the angle around the Y-axis (theta)
+      const angle = Math.atan2(z, x);
+      const u = (angle + Math.PI) / (2 * Math.PI); // Normalize to [0,1]
+
+      // Normalize Y to [0,1] for V coordinate
+      const v = (y - minY) / (maxY - minY);
+
+      uvs[i * 2] = u;
+      uvs[i * 2 + 1] = v;
+    }
+
+    // Assign the new UVs
+    geometry.setAttribute("uv", new THREE.BufferAttribute(uvs, 2));
+  }
+
+  // CANNON >>>
   const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -params.cannonGravity, 0) });
   const timeStep = 1 / 60;
   const particleShape = new CANNON.Particle();
@@ -49,8 +91,8 @@ export default function HatMesh({ params }) {
 
   const headBody = new CANNON.Body({
     mass: 0,
-    shape: new CANNON.Sphere(headRadius + 10),
-    position: new CANNON.Vec3(0, -headRadius - 10, 0),
+    shape: new CANNON.Sphere(headRadius),
+    position: new CANNON.Vec3(0, -headRadius, 0),
   });
   world.addBody(headBody);
 
@@ -91,7 +133,6 @@ export default function HatMesh({ params }) {
         if (x - 1 >= 0) {
           connect(particles[`${x} ${y}`], particles[`${x - 1} ${y}`], y);
         } else {
-          console.log("asdf");
           connect(particles[`${x} ${y}`], particles[`${latheSegments} ${y}`], y);
         }
       }
@@ -100,7 +141,7 @@ export default function HatMesh({ params }) {
     function connect(bodyA, bodyB, y, lockForce = params.fabricStiffness) {
       let adjustedLockForce = lockForce;
       if (y < crownSegments + 1) {
-        adjustedLockForce *= 20;
+        adjustedLockForce *= 10;
       }
       const lockConstraint = new CANNON.LockConstraint(bodyA, bodyB, {
         maxForce: adjustedLockForce,
@@ -149,19 +190,17 @@ export default function HatMesh({ params }) {
     <>
       <mesh
         ref={hatRef}
-        position={[0, params.headHeight, -25]}
+        position={[0, 75, -20]}
+        scale={[params.headRatio, 1, 1]}
         rotation={[-0.3, Math.PI, 0]}
-        castShadow
-        receiveShadow
       >
-        <latheGeometry args={[points, latheSegments]} scale={[params.headRatio, 3, 0]} />
-        <meshStandardMaterial
-          color={"orange"}
-          flatShading={true}
-          side={THREE.DoubleSide}
-          // wireframe={true}
-        />
+        <latheGeometry args={[points, latheSegments]} />
+        <meshStandardMaterial color={"orange"} flatShading={true} side={THREE.DoubleSide} />
       </mesh>
+      {/* <mesh>
+        <sphereGeometry args={[headRadius]} />
+        <meshStandardMaterial />
+      </mesh> */}
     </>
   );
 }
