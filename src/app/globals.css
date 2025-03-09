@@ -1,8 +1,23 @@
 :root {
-  --ui-border-radius: 4px;
-  --ui-border: 2px solid black;
+  --ui-clickable-border-radius: 0.3rem;
+  --ui-clickable-border: 2px solid black;
   --ui-box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.1);
   --ui-divider-border: 1px solid #999;
+  --section-border: solid 1px #070707;
+  --header-height: 4rem;
+}
+
+html {
+  font-family: Inter;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  position: relative;
+  /* background-color: #fafaf6; */
+
+  padding-inline: 2rem;
 }
 
 label {

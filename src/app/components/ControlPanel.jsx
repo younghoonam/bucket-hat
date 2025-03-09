@@ -58,9 +58,7 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
             { value: 650, label: "650" },
           ]}
           ticks={31}
-          tooltipText={
-            "Measure the distance around your head at the widest point, typically just above your eyebrows and ears. This will ensure the hat fits comfortably."
-          }
+          tooltipText={"Measure the length around<br/>your head at the widest point."}
           isMillimeter={params.isMillimeter}
         />
         <Parameter
@@ -80,7 +78,7 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
           ]}
           ticks={21}
           tooltipText={
-            "Measure the vertical distance from the top of your head (crown) to the point where you want the brim of the hat to sit."
+            "The vertical distance from<br/>the top of your head to the point where<br/>you want the brim to start."
           }
           isMillimeter={params.isMillimeter}
         />
@@ -99,9 +97,7 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
             { value: 120, label: "120" },
           ]}
           ticks={46}
-          tooltipText={
-            "Decide how wide you want the brim to be. This is the distance from the edge of the brim to where it meets the crown."
-          }
+          tooltipText={"The width of the brim"}
           isMillimeter={params.isMillimeter}
         />
         <Parameter
@@ -121,7 +117,7 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
           ]}
           ticks={41}
           tooltipText={
-            "Adjust the tilt of the brim. A larger angle creates a more flared look, while a smaller angle keeps it flatter."
+            "The tilt of the brim. A smaller<br/>angle creates a more flared look, while a<br/>larger angle brings the brim down."
           }
         />
         <Parameter
@@ -140,9 +136,6 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
             { value: 20, label: "20" },
           ]}
           ticks={21}
-          tooltipText={
-            "Add extra fabric to the edges of your pattern for sewing. This ensures durability and a proper fit after stitching."
-          }
           isMillimeter={params.isMillimeter}
         />
 
@@ -155,8 +148,8 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
             onChange={onMeasurementChange}
             id={"headRatio"}
             name={"headRatio"}
-            label={"Head Ratio"}
-            tooltipText={"Add extra fabric to the "}
+            label={"Elliptical Ratio"}
+            tooltipText={"The ratio of the long<br/>and short axes of the head"}
             marks={[
               { value: 0.8, label: "0.80" },
               { value: 0.85, label: "0.85" },
@@ -178,7 +171,7 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
             id={"fabricStiffness"}
             name={"fabricStiffness"}
             label={"Fabric Stiffness"}
-            tooltipText={"Adjusts the stiffness of the frabric that retains its original shape"}
+            tooltipText={"The stiffness of the fabric<br/>that retains its original shape"}
             marks={[
               { value: 1.0, label: "1.0" },
               { value: 5.0, label: "5.0" },
@@ -216,7 +209,7 @@ export default function ControlPanel({ params, onMeasurementChange, setPreset })
             id={"cannonGravity"}
             name={"cannonGravity"}
             label={"Simulation Gravity"}
-            tooltipText={"Set higher or lower simulation gravity"}
+            tooltipText={"Sets simulation gravity"}
             marks={[
               { value: 40, label: "40" },
               { value: 65, label: "65" },

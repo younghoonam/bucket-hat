@@ -29,8 +29,8 @@
   background: white;
   transition: all 0.3s;
 
-  border-radius: var(--ui-border-radius);
-  border: var(--ui-border);
+  border-radius: var(--ui-clickable-border-radius);
+  border: var(--ui-clickable-border);
   box-shadow: var(--ui-box-shadow);
 }
 .toggleCheckbox:checked + .toggleContainer::before {

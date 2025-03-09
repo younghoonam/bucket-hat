@@ -39,8 +39,6 @@ export default function HatMesh({ params }) {
     ...curve2.getPoints(brimSegments)
   );
 
-  const materialProps = useTexture({ roughnessMap: "/fabric-roughness.png" });
-
   // UV
   function updateUv() {
     // Create the LatheGeometry
@@ -141,7 +139,10 @@ export default function HatMesh({ params }) {
     function connect(bodyA, bodyB, y, lockForce = params.fabricStiffness) {
       let adjustedLockForce = lockForce;
       if (y < crownSegments + 1) {
-        adjustedLockForce *= 10;
+        const easingInput = 1 - y / crownSegments;
+        const easingOutput = 1 - Math.pow(1 - easingInput, 5);
+
+        adjustedLockForce *= 5 + easingOutput * 20;
       }
       const lockConstraint = new CANNON.LockConstraint(bodyA, bodyB, {
         maxForce: adjustedLockForce,

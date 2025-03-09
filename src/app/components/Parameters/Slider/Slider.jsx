@@ -1,5 +1,6 @@
 // Libraries
 import { useEffect, useRef } from "react";
+import { Tooltip } from "react-tooltip";
 
 // Styles
 import styles from "./Slider.module.css";
@@ -80,12 +81,23 @@ export default function Parameter({
     slider.style.setProperty("--progress", `${percentage}%`);
   }
 
+  const tooltip = (
+    <>
+      <a className={styles.tooltip} data-tooltip-id={id} data-tooltip-html={tooltipText}>
+        ?
+      </a>
+
+      <Tooltip className={styles.tooltipText} id={id} opacity={1} />
+    </>
+  );
+
   return (
     <div className={"parameterWrapper " + (ticks ? "parameterDivider" : "parameterDivider")}>
       <div className={`${styles.parameterContainer} ${ticks ? styles.tickSpace : null}`}>
         <div className={styles.parameterLabel}>
           <label htmlFor={id}>{label}</label>
-          {tooltipText ? <ToolTip tooltipText={tooltipText} /> : null}
+          {/* {tooltipText ? <ToolTip tooltipText={tooltipText} /> : null} */}
+          {tooltipText ? tooltip : null}
         </div>
         <div className={styles.inputContainer}>
           <div className={styles.sliderContainer}>

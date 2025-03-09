@@ -22,8 +22,8 @@
   width: var(--numberAreaWidth);
   height: 1.4rem;
   margin-left: 0.8rem;
-  border: var(--ui-border);
-  border-radius: var(--ui-border-radius);
+  border: var(--ui-clickable-border);
+  border-radius: var(--ui-clickable-border-radius);
   text-align: center;
   font-size: 0.8rem;
   font-weight: 600;
@@ -148,7 +148,7 @@
 
 /* Tooltip >>> */
 
-.tooltip {
+/* .tooltip {
   width: 1.2rem;
   height: 1.2rem;
   border: 2px solid black;
@@ -162,7 +162,7 @@
   margin-left: 0.6rem;
   position: relative;
   z-index: 2;
-  user-select: none; /* Standard syntax */
+  user-select: none;
 }
 
 .tooltip .tooltipText {
@@ -185,7 +185,7 @@
   transition: opacity 0.5s;
 }
 
-/* Show the tooltip text when hovering */
+
 .tooltip:hover .tooltipText {
   visibility: visible;
   opacity: 1;
@@ -200,6 +200,24 @@
   border-width: 5px;
   border-style: solid;
   border-color: black transparent transparent transparent;
+} */
+
+.tooltip {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid black;
+  border-radius: 50%;
+  background-color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.6rem;
 }
 
+.tooltipText {
+  z-index: 10;
+  text-align: center;
+}
 /* <<< Tooltip */

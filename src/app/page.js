@@ -41,8 +41,8 @@ export default function Home() {
       brimAngle: 30,
       headRatio: 0.99,
       seamAllowance: 15,
-      fabricStiffness: 8,
-      fabricWeight: 12,
+      fabricStiffness: 9.11,
+      fabricWeight: 11.22,
       cannonGravity: 90,
       simulation: true,
       headModel: false,
@@ -112,9 +112,9 @@ export default function Home() {
         headRatio: 0.95,
       },
       lowBrim: {
-        headHeight: 80,
+        headHeight: 75,
         headCircumference: 580,
-        brimWidth: 50,
+        brimWidth: 45,
         brimAngle: 70,
         headRatio: 0.95,
       },
@@ -132,25 +132,6 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>Patternea - Bucket Hat</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-          name="description"
-          content="Interactively create custom bucket hat sewing patterns! Input measurements, preview in 3D, simulate physics and download a printable pattern for free."
-        />
-        <meta
-          name="keywords"
-          content="bucket hat pattern, sewing pattern generator, free sewing patterns, 3D pattern preview, hat physics simulator, printable sewing patterns"
-        />
-        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
-        <link
-          href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR:wght@200..900&display=swap"
-          rel="stylesheet"
-        ></link>
-      </Head>
       <Header />
       <main>
         <div ref={configuratorRef} className="configurator">

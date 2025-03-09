@@ -1,21 +1,3 @@
-html {
-  font-family: Inter;
-}
-
-body {
-  margin: 0;
-  background-color: #fafaf6;
-
-  padding-inline: 2rem;
-  --header-height: 4rem;
-
-  /* overflow-x: hidden; */
-}
-
-header {
-  height: var(--header-height);
-}
-
 .configurator {
   width: 100%;
   height: calc(100vh - var(--header-height));
@@ -93,7 +75,7 @@ header {
 
   order: 1;
 
-  border-left: solid 1px #070707;
+  border-left: var(--section-border);
 
   transition: 0.5s;
 }
@@ -119,7 +101,8 @@ header {
   }
   .graphic-container {
     order: -1; /* Moves B to the top */
-    border-bottom: solid 1px #070707;
+    border-bottom: var(--section-border);
+
     height: 60vh;
 
     border-left: none;
@@ -178,10 +161,4 @@ header {
   position: absolute;
   top: 0;
   left: 0;
-}
-
-header {
-  border-bottom: solid 1px;
-
-  height: var(--header-height);
 }

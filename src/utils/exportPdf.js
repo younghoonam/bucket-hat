@@ -165,7 +165,7 @@ async function addPatternPage(
     72,
     18
   );
-  pdf.addImage("./patterneaQr.png", "png", 12.7, 43, 20, 20, "QR", "NONE");
+  pdf.addImage("./images/patterneaQr.png", "png", 12.7, 43, 20, 20, "QR", "NONE");
   pdf.text("20mm", 18, 67);
   pdf.text("20mm", 34.5, 48, { angle: 90, rotationDirection: 0 });
   pdf.text(

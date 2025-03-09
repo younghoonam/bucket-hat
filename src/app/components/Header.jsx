@@ -1,3 +1,5 @@
+"use client";
+
 import { EB_Garamond } from "next/font/google";
 import { useRef } from "react";
 import "@/styles/Header.css";
@@ -19,7 +21,7 @@ export default function Header() {
     <header>
       <ul>
         <li>
-          <a href="" className={`logo ${ebGaramond.className}`}>
+          <a href="/" className={`logo ${ebGaramond.className}`}>
             Patternea
           </a>
         </li>
@@ -27,20 +29,20 @@ export default function Header() {
           <div>
             <ul>
               <li>
-                <a href="">About</a>
+                <a href="/about">About</a>
               </li>
             </ul>
           </div>
         </li>
-        <li className="links">
+        {/* <li className="links">
           <a href="">[Gallery]</a>
         </li>
         <li className="links">Younghoo Nam @2025</li>
         <li className="hamburger" onClick={handleHamburgerClick}>
           <img src={hamburgerIcon} alt="" />
-        </li>
+        </li> */}
       </ul>
-      <div ref={hamburgerMenu} className="hamburger-menu hide">
+      {/* <div ref={hamburgerMenu} className="hamburger-menu hide">
         <ul>
           <li>
             <a href="">About</a>
@@ -52,7 +54,7 @@ export default function Header() {
             <a href="">Younghoo Nam @2025</a>
           </li>
         </ul>
-      </div>
+      </div> */}
     </header>
   );
 }

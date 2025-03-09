@@ -7,7 +7,8 @@ header {
   align-items: center;
   font-size: 0.9rem;
   height: 4rem;
-  /* padding-top: 2rem; */
+  border-bottom: var(--section-border);
+  height: var(--header-height);
 }
 
 ul {
@@ -32,6 +33,7 @@ ul span {
 
 li {
   list-style: none;
+  font-size: 1.4rem;
 }
 
 a {
@@ -83,13 +85,4 @@ a:hover {
 
 .hamburger-menu ul li {
   height: 3rem;
-}
-
-@media (max-width: 768px) {
-  .hamburger {
-    display: block;
-  }
-  .links {
-    display: none;
-  }
 }
