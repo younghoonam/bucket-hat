@@ -41,7 +41,7 @@ export default function Home() {
       brimAngle: 30,
       headRatio: 0.99,
       seamAllowance: 15,
-      fabricStiffness: 9.11,
+      fabricStiffness: 7.85,
       fabricWeight: 11.22,
       cannonGravity: 90,
       simulation: true,

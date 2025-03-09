@@ -107,12 +107,7 @@
 
     border-left: none;
   }
-  body {
-    padding-inline: 0;
-  }
-  header {
-    padding-inline: 2rem;
-  }
+
   .pattern-drawing {
     display: none;
   }

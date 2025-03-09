@@ -16,7 +16,7 @@ body {
   margin: 0;
   position: relative;
   /* background-color: #fafaf6; */
-
+  overflow-x: hidden;
   padding-inline: 2rem;
 }
 
@@ -45,4 +45,16 @@ label {
 
 canvas {
   transition: all 0.5s;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-inline: 0;
+  }
+  header {
+    padding-inline: 2rem;
+  }
+  footer {
+    padding-inline: 2rem;
+  }
 }

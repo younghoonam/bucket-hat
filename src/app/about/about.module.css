@@ -19,6 +19,12 @@
   max-width: calc(100vw - 4rem);
 }
 
+@media (max-width: 768px) {
+  .container {
+    margin-inline: 2rem;
+  }
+}
+
 .heading {
   font-size: 1.8rem;
   font-weight: 900;
