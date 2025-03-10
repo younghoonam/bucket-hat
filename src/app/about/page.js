@@ -14,6 +14,7 @@ export default function About() {
 
     const formData = new FormData(formRef.current);
     const formEntries = Object.fromEntries(formData.entries());
+    formEntries.timeStamp = new Date().toISOString();
 
     formRef.current.reset();
     cursiveRef.current.classList.toggle(styles.writeCursive);
