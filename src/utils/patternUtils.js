@@ -1,29 +1,35 @@
 import { jsPDF } from "jspdf";
 import "svg2pdf.js";
 
+function calculateCurveLength(coordinates) {
+  let length = 0;
+  for (let i = 1; i < coordinates.length; i++) {
+    const dx = coordinates[i].x - coordinates[i - 1].x;
+    const dy = coordinates[i].y - coordinates[i - 1].y;
+    length += Math.hypot(dx, dy);
+  }
+  return length;
+}
+
 export function coneDevelopment({
-  a,
-  b,
-  height,
-  partHeight,
-  developmentAngle,
-  segments = 128,
+  a, // Major Axis A
+  b, // Minor Axix B
+  height, // Total Height of The Cone
+  partHeight, // Height of the cone to be drawn
+  developmentAngle, // Sector angle
+  segments = 128, // number of line segments
 }) {
   const coordinates = [];
   const sectorDivider = 4;
   const ratio = (height - partHeight) / height;
 
   for (let index = 0; index < segments; index++) {
-    const ellipseAngleSegment =
-      ((index / segments) * 2 * Math.PI) / sectorDivider;
+    const ellipseAngleSegment = ((index / segments) * 2 * Math.PI) / sectorDivider;
     const developmentAngleSegment =
       ((index / segments) * developmentAngle) / sectorDivider;
     const slant = Math.hypot(
       height,
-      Math.hypot(
-        a * Math.cos(ellipseAngleSegment),
-        b * Math.sin(ellipseAngleSegment)
-      )
+      Math.hypot(a * Math.cos(ellipseAngleSegment), b * Math.sin(ellipseAngleSegment))
     );
     coordinates.push({
       slant: slant,
@@ -33,16 +39,12 @@ export function coneDevelopment({
   }
 
   for (let index = segments; index > 0; index--) {
-    const ellipseAngleSegment =
-      ((index / segments) * 2 * Math.PI) / sectorDivider;
+    const ellipseAngleSegment = ((index / segments) * 2 * Math.PI) / sectorDivider;
     const developmentAngleSegment =
       ((index / segments) * developmentAngle) / sectorDivider;
     const slant = Math.hypot(
       height,
-      Math.hypot(
-        a * Math.cos(ellipseAngleSegment),
-        b * Math.sin(ellipseAngleSegment)
-      )
+      Math.hypot(a * Math.cos(ellipseAngleSegment), b * Math.sin(ellipseAngleSegment))
     );
 
     const partSlant = slant * ratio;
@@ -189,20 +191,13 @@ export function seamAllowance(points, distance) {
   let prevOffsetLine;
 
   for (let index = 0; index < points.length - 1; index++) {
-    const line = getLine(
-      points[index],
-      points[(index + 1) % (points.length - 1)]
-    );
-    const isGoingDown =
-      points[index].y > points[(index + 1) % (points.length - 1)].y;
+    const line = getLine(points[index], points[(index + 1) % (points.length - 1)]);
+    const isGoingDown = points[index].y > points[(index + 1) % (points.length - 1)].y;
     const perpSlope = perpLineSlope(line.m);
 
     let offsetPoint1, offsetPoint2;
 
-    if (
-      points[index].isOnFold &&
-      points[(index + 1) % (points.length - 1)].isOnFold
-    ) {
+    if (points[index].isOnFold && points[(index + 1) % (points.length - 1)].isOnFold) {
       offsetPoint1 = points[index];
       offsetPoint2 = points[(index + 1) % (points.length - 1)];
     } else {

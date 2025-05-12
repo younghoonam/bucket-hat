@@ -21,15 +21,22 @@ export default function About() {
     setTimeout(() => {
       cursiveRef.current.classList.toggle(styles.writeCursive);
     }, 2000);
-    const response = await fetch("/api/feedback", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formEntries),
-    });
 
-    const data = await response.json();
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        body: JSON.stringify(formEntries),
+      });
+      const result = await response.json();
 
-    console.log(data);
+      if (response.ok) {
+        console.log("Form submitted successfully", result);
+      } else {
+        console.error("Error submitting form", result);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
   }
 
   return (
@@ -58,30 +65,32 @@ export default function About() {
       <div className={styles.container}>
         <h1 className={styles.heading}>About</h1>
         <p className={styles.paragraph}>
-          One of the biggest challenges of sewing from patterns is that you often have little idea
-          of how the final garment will look. Small differences in length and angle can
-          significantly affect the final shape, especially for small and three-dimensional garments
-          like hats. Additionally, making adjustments to one piece often means having to modify all
-          the other pieces, which can be frustrating and time-consuming.
+          One of the biggest challenges of sewing from patterns is that you often have
+          little idea of how the final garment will look. Small differences in length and
+          angle can significantly affect the final shape, especially for small and
+          three-dimensional garments like hats. Additionally, making adjustments to one
+          piece often means having to modify all the other pieces, which can be
+          frustrating and time-consuming.
           <br />
           <br />
-          I sew quite a few hats every year—most of them bucket hats. They’re comfortable and match
-          my style. Over time, I developed a preference for how a bucket hat should fit me—a
-          slightly short brim, angled low so that the edge sits just above my eye level. However,
-          most patterns available online lacked the details I was looking for, so I decided to build
-          this project to create patterns for my taste.
+          I sew quite a few hats every year—most of them bucket hats. They’re comfortable
+          and match my style. Over time, I developed a preference for how a bucket hat
+          should fit me—a slightly short brim, angled low so that the edge sits just above
+          my eye level. However, most patterns available online lacked the details I was
+          looking for, so I decided to build this project to create patterns for my taste.
           <br />
           <br />
-          This tool allows you to customize size, shape, seam allowance, and even preview the hat
-          using a physics engine that simulates how it would look on a head! But, please note that
-          this project is still a work in progress, and there may be some bugs in the pattern
-          calculations. I can’t guarantee that every generated pattern will turn out exactly as
-          shown in the preview, so test it out first before using any precious fabrics.
+          This tool allows you to customize size, shape, seam allowance, and even preview
+          the hat using a physics engine that simulates how it would look on a head! But,
+          please note that this project is still a work in progress, and there may be some
+          bugs in the pattern calculations. I can’t guarantee that every generated pattern
+          will turn out exactly as shown in the preview, so test it out first before using
+          any precious fabrics.
         </p>
         <h1 className={styles.heading}>Feedback</h1>
         <p className={styles.paragraph}>
-          If you have feedback, suggestions, found any bugs or just have something to say, feel free
-          to leave a message below!
+          If you have feedback, suggestions, found any bugs or just have something to say,
+          feel free to leave a message below!
         </p>
         <form
           ref={formRef}
@@ -101,11 +110,23 @@ export default function About() {
         </form>
         <h1 className={styles.heading}>Thank You!</h1>
         <p className={styles.paragraph}>
-          Thank you for your interest in this project and taking the time to read this page. I hope
-          this tool can help you create bucket hats that you were always looking for. I plan on
-          polishing the project by adding more simulation parameters, advanced measurements, export
-          settings, and so on. Drop by once in a while!
+          Thank you for your interest in this project and taking the time to read this
+          page. I hope this tool can help you create bucket hats that you were always
+          looking for. I plan on polishing the project by adding more simulation
+          parameters, advanced measurements, export settings, and so on. Drop by once in a
+          while!
         </p>
+        <a
+          href="https://www.buymeacoffee.com/younghoonam"
+          target="blank"
+          style={{ width: "fit-content", height: "fit-content" }}
+        >
+          <img
+            className={styles.buymeacoffeeButton}
+            src="/images/buymeacoffee.png"
+            alt="Buy me a coffee donation link image"
+          />
+        </a>
       </div>
       <Footer />
     </>

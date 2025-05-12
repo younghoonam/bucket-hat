@@ -138,3 +138,12 @@
   opacity: 1;
   stroke-dashoffset: -2000;
 }
+
+.buymeacoffeeButton {
+  display: block;
+
+  width: 10rem;
+  border: var(--ui-clickable-border);
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}

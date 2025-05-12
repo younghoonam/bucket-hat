@@ -25,7 +25,10 @@ export default function HatMesh({ params }) {
   const point0 = new THREE.Vector2(0, 0);
   const point1 = new THREE.Vector2(params.crownA, 0);
   const point2 = new THREE.Vector2(params.headA, -params.headHeight);
-  const point3 = new THREE.Vector2(params.brimA, -1 * (params.headHeight + params.brimOffset));
+  const point3 = new THREE.Vector2(
+    params.brimA,
+    -1 * (params.headHeight + params.brimOffset)
+  );
 
   const curve0 = new THREE.LineCurve(point0, point1);
   const curve1 = new THREE.LineCurve(point1, point2);
@@ -39,49 +42,10 @@ export default function HatMesh({ params }) {
     ...curve2.getPoints(brimSegments)
   );
 
-  // UV
-  function updateUv() {
-    // Create the LatheGeometry
-    const geometry = hatRef.current.geometry;
-
-    // Extract positions from geometry
-    const posAttr = geometry.attributes.position;
-    const positions = posAttr.array;
-    const vertexCount = posAttr.count;
-
-    // Compute min/max Y for normalization
-    let minY = Infinity,
-      maxY = -Infinity;
-    for (let i = 1; i < positions.length; i += 3) {
-      const y = positions[i];
-      if (y < minY) minY = y;
-      if (y > maxY) maxY = y;
-    }
-
-    // Compute UVs
-    const uvs = new Float32Array(vertexCount * 2);
-    for (let i = 0; i < vertexCount; i++) {
-      const x = positions[i * 3];
-      const z = positions[i * 3 + 2];
-      const y = positions[i * 3 + 1];
-
-      // Compute the angle around the Y-axis (theta)
-      const angle = Math.atan2(z, x);
-      const u = (angle + Math.PI) / (2 * Math.PI); // Normalize to [0,1]
-
-      // Normalize Y to [0,1] for V coordinate
-      const v = (y - minY) / (maxY - minY);
-
-      uvs[i * 2] = u;
-      uvs[i * 2 + 1] = v;
-    }
-
-    // Assign the new UVs
-    geometry.setAttribute("uv", new THREE.BufferAttribute(uvs, 2));
-  }
-
   // CANNON >>>
-  const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -params.cannonGravity, 0) });
+  const world = new CANNON.World({
+    gravity: new CANNON.Vec3(0, -params.cannonGravity, 0),
+  });
   const timeStep = 1 / 60;
   const particleShape = new CANNON.Particle();
   const particles = {};
@@ -95,12 +59,12 @@ export default function HatMesh({ params }) {
   world.addBody(headBody);
 
   function initCannon() {
+    const vertexPosition = hatRef.current.geometry.getAttribute("position");
     for (let x = 0; x < latheSegments + 1; x++) {
       for (let y = 0; y < crossSegments + 1; y++) {
         const key = `${x} ${y}`;
 
         const vertexIndex = y + x * (crossSegments + 1);
-        const vertexPosition = hatRef.current.geometry.getAttribute("position");
 
         const xPos = vertexPosition.getX(vertexIndex);
         const yPos = vertexPosition.getY(vertexIndex);
@@ -120,15 +84,13 @@ export default function HatMesh({ params }) {
 
     for (let x = latheSegments; x >= 0; x--) {
       for (let y = crossSegments; y >= 0; y--) {
-        const key = `${x} ${y}`;
-
         // connect to vertical partical
-        if (y - 1 >= 0) {
+        if (y >= 1) {
           connect(particles[`${x} ${y}`], particles[`${x} ${y - 1}`], y);
         }
 
         // connect to horizontal
-        if (x - 1 >= 0) {
+        if (x >= 1) {
           connect(particles[`${x} ${y}`], particles[`${x - 1} ${y}`], y);
         } else {
           connect(particles[`${x} ${y}`], particles[`${latheSegments} ${y}`], y);
@@ -196,7 +158,11 @@ export default function HatMesh({ params }) {
         rotation={[-0.3, Math.PI, 0]}
       >
         <latheGeometry args={[points, latheSegments]} />
-        <meshStandardMaterial color={"orange"} flatShading={true} side={THREE.DoubleSide} />
+        <meshStandardMaterial
+          color={"orange"}
+          flatShading={true}
+          side={THREE.DoubleSide}
+        />
       </mesh>
       {/* <mesh>
         <sphereGeometry args={[headRadius]} />

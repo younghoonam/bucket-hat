@@ -20,6 +20,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-tooltip": "^5.28.0",
+    "resend": "^4.5.1",
     "svg2pdf.js": "^2.4.0"
   },
   "devDependencies": {
