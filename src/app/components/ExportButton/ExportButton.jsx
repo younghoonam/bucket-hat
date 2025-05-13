@@ -3,7 +3,7 @@ import styles from "./ExportButton.module.css";
 export default function ExportButton({ exportButtonRef, containerRef, onChange }) {
   return (
     <div ref={containerRef} className={styles.exportButtonContainer}>
-      <button ref={exportButtonRef} className={styles.exportButton}>
+      <button ref={exportButtonRef} className={styles.exportButton} id="exportPdf">
         Export to PDF
       </button>
       <div className={styles.paperSizeSelection}>
